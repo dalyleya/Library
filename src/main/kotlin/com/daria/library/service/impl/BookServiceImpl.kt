@@ -1,18 +1,21 @@
 package com.daria.library.service.impl
 
-import com.daria.library.entities.BookDTO
+import com.daria.library.dto.BookDTO
+import com.daria.library.entity.BookEntity
+import com.daria.library.repository.BookRepository
 import com.daria.library.service.BookService
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
-class BookServiceImpl : BookService {
-    override fun getAll(): List<BookDTO> {
+class BookServiceImpl(private val bookRepository: BookRepository) : BookService {
 
-//        TODO("Just a mock as for now")
-
-        return listOf(
-            BookDTO(1, "Eho Labirinths", "Max Frei", 1, 0),
-            BookDTO(2, "Folk of the forest", "Lesia Ukrainka", 2, 0),
-        )
+    private val pageSize = 2
+    override fun getAll(pageIndex : Int): List<BookDTO> {
+        return bookRepository.findByOrderByName(PageRequest.of(pageIndex, pageSize)).map { it.toDTO() }
     }
+
+    private fun BookEntity.toDTO(): BookDTO =
+        BookDTO(this.id, this.name, this.author, this.totalCount, this.takenNumber)
+
 }

@@ -1,11 +1,11 @@
 package com.daria.library
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.ComponentScan
 
-//@SpringBootApplication
-@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class])
+@SpringBootApplication
+//@ComponentScan("com.daria.library.repository")
 class LibraryApplication
 
 fun main(args: Array<String>) {

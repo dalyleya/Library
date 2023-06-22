@@ -1,4 +1,4 @@
-package com.daria.library.entities
+package com.daria.library.dto
 
 import java.util.Date
 

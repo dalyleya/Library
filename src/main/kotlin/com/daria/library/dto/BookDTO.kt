@@ -1,4 +1,4 @@
-package com.daria.library.entities
+package com.daria.library.dto
 
 data class BookDTO(val id : Int,
                    val name : String,
