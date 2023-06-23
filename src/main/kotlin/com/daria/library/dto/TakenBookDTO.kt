@@ -4,7 +4,7 @@ import java.util.Date
 
 data class TakenBookDTO(
     val book: BookDTO,
-    val userOwned: UserDTO,
+    val subscriberOwned: SubscriberDTO,
     val dateOwned: Date,
     var isReturned: Boolean
 )
