@@ -16,10 +16,6 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
         return bookRepository.findByOrderByName(PageRequest.of(pageIndex, pageSize)).map { it.toDTO() }
     }
 
-//    override fun findByName(name: String): BookDTO? {
-//
-//    }
-
     override fun getById(id: Int): BookDTO {
         return bookRepository.findByIdOrNull(id)?.toDTO()
         // TODO create own Exception later
