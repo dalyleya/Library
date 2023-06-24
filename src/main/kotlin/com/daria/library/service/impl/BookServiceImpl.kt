@@ -2,6 +2,7 @@ package com.daria.library.service.impl
 
 import com.daria.library.dto.BookDTO
 import com.daria.library.entity.BookEntity
+import com.daria.library.exception.BookNotFoundException
 import com.daria.library.repository.BookRepository
 import com.daria.library.service.BookService
 import org.springframework.data.domain.PageRequest
@@ -18,8 +19,7 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
 
     override fun getById(id: Int): BookDTO {
         return bookRepository.findByIdOrNull(id)?.toDTO()
-        // TODO create own Exception later
-            ?: throw IllegalArgumentException("Book with id $id not found")
+            ?: throw BookNotFoundException(id)
     }
 
     override fun search(prefix: String): List<BookDTO> {
@@ -33,8 +33,7 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
 
     override fun update(id: Int, bookDTO: BookDTO) {
         val existingBook = bookRepository.findByIdOrNull(id)
-        // TODO create own Exception later
-            ?: throw IllegalArgumentException("Book with id $id not found")
+            ?: throw BookNotFoundException(id)
         existingBook.name = bookDTO.name
         existingBook.author = bookDTO.author
         existingBook.totalCount = bookDTO.totalCount
@@ -44,8 +43,7 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
 
     override fun delete(id: Int) {
         val existingBook = bookRepository.findByIdOrNull(id)
-        // TODO create own Exception later
-            ?: throw IllegalArgumentException("Book with id $id not found")
+            ?: throw BookNotFoundException(id)
         bookRepository.deleteById(existingBook.id)
     }
 
