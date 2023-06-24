@@ -7,6 +7,7 @@ interface BookService {
 
     fun getById(id: Int): BookDTO
     fun search(prefix: String): List<BookDTO>
+    fun getBookNames(): List<String>
     fun create(bookDTO: BookDTO): Int
     fun update(id: Int, bookDTO: BookDTO)
     fun delete(id: Int)

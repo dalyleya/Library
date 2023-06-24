@@ -27,6 +27,10 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
             .map { it.toDTO() }
     }
 
+    override fun getBookNames(): List<String> {
+        return bookRepository.findAllByOrderByName().map { it.name }
+    }
+
     override fun create(bookDTO: BookDTO): Int {
         return bookRepository.save(bookDTO.toEntity()).id
     }

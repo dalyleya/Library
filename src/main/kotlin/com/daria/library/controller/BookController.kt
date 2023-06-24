@@ -30,6 +30,10 @@ class BookController(
     fun searchBooks(@RequestParam("prefix") prefix: String): List<BookDTO> =
         bookService.search(prefix)
 
+    @GetMapping("/names")
+    fun getBookNames(): List<String> =
+        bookService.getBookNames()
+
     /**
      * Create a new book and return its id
      */
