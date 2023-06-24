@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 class BookServiceImpl(private val bookRepository: BookRepository) : BookService {
 
     private val pageSize = 2
-    override fun getAll(pageIndex : Int): List<BookDTO> {
+    override fun getAll(pageIndex: Int): List<BookDTO> {
         return bookRepository.findByOrderByName(PageRequest.of(pageIndex, pageSize)).map { it.toDTO() }
     }
 
@@ -27,7 +27,32 @@ class BookServiceImpl(private val bookRepository: BookRepository) : BookService 
             .map { it.toDTO() }
     }
 
+    override fun create(bookDTO: BookDTO): Int {
+        return bookRepository.save(bookDTO.toEntity()).id
+    }
+
+    override fun update(id: Int, bookDTO: BookDTO) {
+        val existingBook = bookRepository.findByIdOrNull(id)
+        // TODO create own Exception later
+            ?: throw IllegalArgumentException("Book with id $id not found")
+        existingBook.name = bookDTO.name
+        existingBook.author = bookDTO.author
+        existingBook.totalCount = bookDTO.totalCount
+        existingBook.takenNumber = bookDTO.takenNumber
+        bookRepository.save(existingBook)
+    }
+
+    override fun delete(id: Int) {
+        val existingBook = bookRepository.findByIdOrNull(id)
+        // TODO create own Exception later
+            ?: throw IllegalArgumentException("Book with id $id not found")
+        bookRepository.deleteById(existingBook.id)
+    }
+
     private fun BookEntity.toDTO(): BookDTO =
         BookDTO(this.id, this.name, this.author, this.totalCount, this.takenNumber)
+
+    private fun BookDTO.toEntity(): BookEntity =
+        BookEntity(name = this.name, author = this.author, totalCount = this.totalCount)
 
 }

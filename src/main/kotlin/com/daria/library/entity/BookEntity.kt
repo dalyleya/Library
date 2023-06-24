@@ -10,18 +10,18 @@ class BookEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0,
+    var id: Int = 0,
 
-    val name: String = "",
+    var name: String = "",
 
-    val author: String = "",
+    var author: String = "",
 
     @Column(name = "total_count")
     var totalCount: Int = 0,
 
     @Column(name = "taken_count")
-    var takenNumber: Int = 0,
+    var takenNumber: Int? = 0,
 
     @OneToMany(mappedBy = "book")
-    val takenBooks: Set<TakenBookEntity>
+    var takenBooks: Set<TakenBookEntity>? = null
 )
